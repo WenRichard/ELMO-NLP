@@ -57,6 +57,11 @@
 ### 实验分析
 ELMO提升了大概3个百分点吧，提升还是挺大的！  
 
+### LINK
+[1]https://github.com/allenai/bilm-tf  
+[2]https://allennlp.org/elmo  
+[[3]ELMO 预训练模型](https://www.cnblogs.com/jiangxinyang/p/10235054.html)
+
 --------------------------------------------------------------
 **如果觉得我的工作对您有帮助，请不要吝啬右上角的小星星哦！欢迎Fork和Star！也欢迎一起建设这个项目！**    
 **有时间就会更新问答相关项目，有兴趣的同学可以follow一下**  
