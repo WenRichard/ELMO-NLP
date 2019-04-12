@@ -23,8 +23,44 @@
             elmo_options.json 模型参数文件，需要下载[2]
             elmo_weights.hdf5 模型的结构和权重值，需要下载[2]
             elmo_token_embeddings.hdf5 根据自身的数据生成
-            vocab.txt诗句 根据自身的数据生成
+            vocab.txt 根据自身的数据生成
         
 ### 如何使用ELMO"黑匣子"
-这部分主要介绍如何将ELMO代码进行复用，迁移到不同领域上  
+这部分主要介绍如何将ELMO代码进行复用，快速迁移到不同领域上  
+1. data_helper_emlo.py中的Dataset类  
+  +  _genVocabFile( )  
+   生成词表文件vocab.txt    
+  + _genElmoEmbedding( ): 
+  调用ELMO源码中的dump_token_embeddings方法，基于字符的表示生成词的向量表示elmo_token_embeddings.hdf5      
+  **dump_token_embeddings的各参数介绍：**  
+  1.self._vocabFile,  词汇表（训练集，验证集，测试集）  
+  2.self._optionFile,  官网下载  
+  3.self._weightFile,  官网下载  
+  4.self._tokenEmbeddingFile   保存位置  
+  
+2. qacnn_emlo.py训练阶段  
+  + 实例化BiLM对象，得到bilm
+  + 调用bilm中的__call__方法生成op对象，得到inputEmbeddingsOp
+  + 计算ELMo向量表示，得到elmoInput
+  + 定义elmo的batch形式，得到elmo函数
+
+### 实验设置
+|Model|CNN share|Dropout|Parameters|Margin|Epoch|MAP|MRR|  
+|-|-|-|-|-|-|-|-|  
+|QACNN|No|0.5|2115200|0.5|100|0.655|0.673|  
+|QACNN|Yes|0.5|481664|0.5|100|0.684|0.697|  
+|QACNN|Yes|0.5|481664|0.25|100|0.668|0.674|  
+|QACNN|Yes|0.5|481664|0.2|100|0.690|0.695|  
+|QACNN_EMLO|Yes|0.5|476036|0.5|100|0.711|0.729| 
+
+
+### 实验分析
+ELMO提升了大概3个百分点吧，提升还是挺大的！  
+
+--------------------------------------------------------------
+**如果觉得我的工作对您有帮助，请不要吝啬右上角的小星星哦！欢迎Fork和Star！也欢迎一起建设这个项目！**    
+**有时间就会更新问答相关项目，有兴趣的同学可以follow一下**  
+**留言请在Issues或者email xiezhengwen2013@163.com**
+
+   
 
